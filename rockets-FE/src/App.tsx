@@ -7,10 +7,9 @@ import {
   Link,
   Routes
 } from 'react-router-dom'
-import AdminRocket from './pages/AdminRocket'
+
 import Rockets from './pages/Rockets'
 import CreateRocket from './pages/CreateRocket'
-import EditRocket from './pages/EditRocket'
 import styled from 'styled-components'
 
 const Ul = styled.ul`
@@ -44,7 +43,6 @@ function App () {
           <Route path="/" />
           <Route path="/public-rockets" element={<Rockets />} />
           <Route path="/create-rocket" element={<CreateRocket />} />
-          <Route path="/edit-rocket" element={<EditRocket />} />
         </Routes>
       </Router>
     </div>

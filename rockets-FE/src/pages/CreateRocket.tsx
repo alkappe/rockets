@@ -3,7 +3,7 @@ import { RocketForm } from '../components/RocketForm'
 import { RocketList } from '../components/RocketList'
 
 import Modal from 'react-modal'
-import { getRockets } from '../api'
+import { deleteRocket, getRockets } from '../api'
 import { type Rocket } from '../components/Rocket'
 import styled from 'styled-components'
 
@@ -27,6 +27,17 @@ const Button = styled.button`
 export default function CreateRocket () {
   const [list, setList] = useState<Rocket[]>([])
   const [modalIsOpen, setIsOpen] = useState(false)
+  const [editRocket, setEditRocket] = useState<Rocket | null>(null)
+
+  const onDelete = async (_id: string) => {
+    await deleteRocket(_id)
+    await fetchRockets()
+  }
+
+  const onEdit = async (rocket: Rocket) => {
+    setEditRocket(rocket)
+    openModal()
+  }
 
   const fetchRockets = async () => {
     const res = await getRockets()
@@ -55,9 +66,9 @@ export default function CreateRocket () {
         ariaHideApp={false}
         contentLabel="Example Modal"
       >
-        <RocketForm onSuccessfulSubmit={() => { void fetchRockets() }} closeModal={closeModal}/>
+        <RocketForm rocket={editRocket} onSuccessfulSubmit={() => { void fetchRockets() }} closeModal={closeModal}/>
       </Modal>
-      <RocketList rockets={list} onSuccessfulDelete={ () => { void fetchRockets() }} />
+      <RocketList rockets={list} onEdit={(_id) => { void onEdit(_id) }} onDelete={(_id) => { void onDelete(_id) }} />
       </>
   )
 }

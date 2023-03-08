@@ -4,7 +4,8 @@ import styled from 'styled-components'
 
 type RocketListProps = {
   rockets: Rocket[]
-  onSuccessfulDelete: () => void
+  onDelete: (_id: string) => void
+  onEdit: (rocket: Rocket) => void
 }
 
 // get the array from db
@@ -21,12 +22,12 @@ const P = styled.p`
   align-self: flex-start;
 `
 
-export const RocketList = ({ rockets, onSuccessfulDelete }: RocketListProps) => {
+export const RocketList = ({ rockets, onDelete, onEdit }: RocketListProps) => {
   return (
         <List>
            <P>List of Rockets:</P>
       {rockets.map((rocket: Rocket, i: number) => {
-        return (<RocketListElement onSuccessfulDelete={onSuccessfulDelete} key={i} rocket={rocket} />)
+        return (<RocketListElement onEdit={onEdit} onDelete={onDelete} key={i} rocket={rocket} />)
       })}
         </List>
   )

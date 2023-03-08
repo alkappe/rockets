@@ -1,7 +1,8 @@
 import React, { useReducer } from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import formReducer, { initialFormState } from '../../reducers/formReducer'
-import { createRocket } from '../../api'
+import { createRocket, editRocket } from '../../api'
+import { type Rocket } from '../Rocket'
 
 const Form = styled.form`
   border-radius: 3px;
@@ -55,10 +56,11 @@ const InputButton = styled.input`
 type Props = {
   closeModal: () => void
   onSuccessfulSubmit: () => void
+  rocket: Rocket | null
 }
 
-export const RocketForm: React.FC<Props> = ({ closeModal, onSuccessfulSubmit }) => {
-  const [state, dispatch] = useReducer(formReducer, initialFormState)
+export const RocketForm: React.FC<Props> = ({ closeModal, onSuccessfulSubmit, rocket }) => {
+  const [state, dispatch] = useReducer(formReducer, rocket ?? initialFormState)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     dispatch({
@@ -70,7 +72,11 @@ export const RocketForm: React.FC<Props> = ({ closeModal, onSuccessfulSubmit }) 
 
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    await createRocket(state)
+    if ('_id' in state) {
+      await editRocket(state as Rocket)
+    } else {
+      await createRocket(state)
+    }
     onSuccessfulSubmit()
     closeModal()
   }

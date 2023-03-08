@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { deleteRocket } from '../../api'
 
 export type Rocket = {
   _id: string
@@ -12,7 +11,8 @@ export type Rocket = {
 }
 type Props = {
   rocket: Rocket
-  onSuccessfulDelete: () => void
+  onDelete: (_id: string) => void
+  onEdit: (rocket: Rocket) => void
 }
 
 const Item = styled.div`
@@ -24,12 +24,7 @@ const Item = styled.div`
     justify-content: space-between;
   `
 
-export const RocketListElement = ({ rocket, onSuccessfulDelete }: Props) => {
-  const onDeleteButtonClick = async (_id: string) => {
-    await deleteRocket(_id)
-    onSuccessfulDelete()
-  }
-
+export const RocketListElement = ({ rocket, onDelete, onEdit }: Props) => {
   return (
         <Item>
             <h3>🚀</h3>
@@ -38,8 +33,8 @@ export const RocketListElement = ({ rocket, onSuccessfulDelete }: Props) => {
             <p>{rocket.height}</p>
             <p>{rocket.diameter}</p>
             <p>{rocket.mass}</p>
-            <button>✏️</button>
-          <button onClick={() => { void onDeleteButtonClick(rocket._id) }}>❌</button>
+            <button onClick={() => { onEdit(rocket) } }>✏️</button>
+            <button onClick={() => { onDelete(rocket._id) }}>❌</button>
         </Item>
   )
 }

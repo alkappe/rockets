@@ -25,3 +25,13 @@ export const deleteRocket = async (_id: string) => {
   const res = await fetch(`http://localhost:3000/rocket/${_id}`, { method: 'DELETE' })
   return await res.json()
 }
+
+export const editRocket = async (rocket: Rocket) => {
+  const requestOptions = {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(rocket)
+  }
+  const res = await fetch(`http://localhost:3000/rocket/${rocket._id}`, requestOptions)
+  return await res.json()
+}
