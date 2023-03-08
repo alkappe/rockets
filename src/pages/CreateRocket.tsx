@@ -5,6 +5,7 @@ import { RocketList } from '../components/RocketList'
 import Modal from 'react-modal'
 import { getRockets } from '../api'
 import { type Rocket } from '../components/Rocket'
+import styled from 'styled-components'
 
 const modal = {
   content: {
@@ -17,6 +18,11 @@ const modal = {
     background: '#61E786'
   }
 }
+
+const Button = styled.button`
+  margin: 0px auto 20px auto;
+  border: solid 2px black;
+`
 
 export default function CreateRocket () {
   const [list, setList] = useState<Rocket[]>([])
@@ -41,7 +47,7 @@ export default function CreateRocket () {
 
   return (
       <>
-      <button onClick={openModal}>Let&apos;s create the rocket 🥵</button>
+      <Button onClick={openModal}>Let&apos;s create the rocket 🥵</Button>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}

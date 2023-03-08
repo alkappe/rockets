@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default function AdminRocket() {
+export default function AdminRocket () {
   return (
-    <div>AdminRocket</div>
+    <div>Admin rocket place</div>
   )
 }

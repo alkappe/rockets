@@ -1,12 +1,11 @@
 import React, { useReducer } from 'react'
 import styled, { css } from 'styled-components'
 import formReducer, { initialFormState } from '../../reducers/formReducer'
-import { RocketList } from '../RocketList'
 import { createRocket } from '../../api'
 
 const Form = styled.form`
   border-radius: 3px;
-
+  width: 320px;
   margin: 0 10px;
   display: flex;
   flex-direction: column;
@@ -26,6 +25,32 @@ const Label = styled.label`
   marginBottom: 10px;
   padding: 4px;
   userSelect: none;
+`
+
+const Input = styled.input`
+    cursor: pointer;
+    height: 20px;
+    margin: 8px 0 4px 0;
+    border: transparent;
+    border-radius: 3px;
+`
+
+const Textarea = styled.textarea`
+    cursor: pointer;
+    height: 60px;
+    margin: 8px 0 4px 0;
+    border: transparent;
+    border-radius: 3px;
+`
+
+const InputButton = styled.input`
+    height: 28px;
+    background: black;
+    color: white;
+    margin: 8px 0 4px 0;
+    border: transparent;
+    border-radius: 3px;
+    cursor: pointer;
 `
 type Props = {
   closeModal: () => void
@@ -54,25 +79,25 @@ export const RocketForm: React.FC<Props> = ({ closeModal, onSuccessfulSubmit }) 
     <Form onSubmit={(e) => { void handleOnSubmit(e) }}>
         <Label>
             Rocket name:
-            <input type='text' value={state.name} name="name" onChange={handleInputChange}/>
+            <Input type='text' value={state.name} name="name" onChange={handleInputChange}/>
         </Label>
         <Label>
             Description:
-            <textarea value={state.description} name="description" onChange={handleInputChange}/>
+            <Textarea value={state.description} name="description" onChange={handleInputChange}/>
         </Label>
         <Label>
             Height:
-            <input type="number" value={state.height} name="height" onChange={handleInputChange}/>
+            <Input type="number" min="0" value={state.height} name="height" onChange={handleInputChange}/>
         </Label>
         <Label>
             Diameter:
-            <input type="number" value={state.diameter} name="diameter" onChange={handleInputChange}/>
+            <Input type="number" min="0" value={state.diameter} name="diameter" onChange={handleInputChange}/>
         </Label>
         <Label>
             Mass:
-            <input type="number" value={state.mass} name="mass" onChange={handleInputChange}/>
+            <Input type="number" min="0" value={state.mass} name="mass" onChange={handleInputChange}/>
         </Label>
-        <input type="submit" value="Submit" />
+        <InputButton type="submit" value="Submit" />
     </Form>
   )
 }
